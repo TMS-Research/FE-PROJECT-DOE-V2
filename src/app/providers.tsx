@@ -1,7 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "next-themes";
-import { queryClient } from "@/lib/react-query";
+import { queryClient } from "@/app/lib/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
