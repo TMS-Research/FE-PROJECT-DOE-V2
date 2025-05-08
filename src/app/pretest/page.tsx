@@ -1,0 +1,373 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { CheckCircle, XCircle, Award, Brain, Sparkles } from 'lucide-react';
+
+// Add keyframe animations for playful elements
+const animationStyles = `
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes celebrate {
+    0% { transform: scale(0) rotate(0deg); opacity: 0; }
+    50% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .animate-celebrate {
+    animation: celebrate 0.5s ease-out forwards;
+  }
+`;
+
+interface Question {
+  id: number;
+  text: string;
+  options: string[];
+  correctAnswer: number;
+  difficulty: 'normal' | 'easy';
+  emoji?: string;
+}
+
+export default function Pretest() {
+  const router = useRouter();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [score, setScore] = useState(0);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
+  const [showCelebration, setShowCelebration] = useState(false);
+
+  // Questions with normal difficulty
+  const normalQuestions: Question[] = [
+    {
+      id: 1,
+      text: "What is the capital of France?",
+      options: ["London", "Berlin", "Paris", "Madrid"],
+      correctAnswer: 2,
+      difficulty: "normal",
+      emoji: "🗼"
+    },
+    {
+      id: 2,
+      text: "Which planet is known as the Red Planet?",
+      options: ["Venus", "Mars", "Jupiter", "Saturn"],
+      correctAnswer: 1,
+      difficulty: "normal",
+      emoji: "🪐"
+    },
+    {
+      id: 3,
+      text: "What is the chemical symbol for gold?",
+      options: ["Go", "Gd", "Au", "Ag"],
+      correctAnswer: 2,
+      difficulty: "normal",
+      emoji: "⚗️"
+    },
+    {
+      id: 4,
+      text: "Which famous scientist developed the theory of relativity?",
+      options: ["Isaac Newton", "Albert Einstein", "Nikola Tesla", "Galileo Galilei"],
+      correctAnswer: 1,
+      difficulty: "normal",
+      emoji: "🧠"
+    },
+    {
+      id: 5,
+      text: "What is the largest organ in the human body?",
+      options: ["Brain", "Liver", "Heart", "Skin"],
+      correctAnswer: 3,
+      difficulty: "normal",
+      emoji: "🔬"
+    },
+  ];
+
+  // Easier alternative questions
+  const easyQuestions: Question[] = [
+    {
+      id: 6,
+      text: "Which country is Paris located in?",
+      options: ["Italy", "France", "Spain", "Germany"],
+      correctAnswer: 1,
+      difficulty: "easy",
+      emoji: "🗼"
+    },
+    {
+      id: 7,
+      text: "What color is Mars often described as?",
+      options: ["Blue", "Green", "Red", "Yellow"],
+      correctAnswer: 2,
+      difficulty: "easy",
+      emoji: "🪐"
+    },
+    {
+      id: 8,
+      text: "Gold is what type of material?",
+      options: ["Plastic", "Metal", "Wood", "Glass"],
+      correctAnswer: 1,
+      difficulty: "easy",
+      emoji: "⚗️"
+    },
+    {
+      id: 9,
+      text: "Einstein is famous for which scientific field?",
+      options: ["Biology", "Chemistry", "Physics", "Geology"],
+      correctAnswer: 2,
+      difficulty: "easy",
+      emoji: "🧠"
+    },
+    {
+      id: 10,
+      text: "Which of these is on the outside of your body?",
+      options: ["Lungs", "Stomach", "Skin", "Liver"],
+      correctAnswer: 2,
+      difficulty: "easy",
+      emoji: "🔬"
+    }
+  ];
+
+  const [questions, setQuestions] = useState<Question[]>([...normalQuestions]);
+
+  const handleOptionSelect = (optionIndex: number) => {
+    setSelectedOption(optionIndex);
+  };
+
+  const handleSubmit = () => {
+    if (selectedOption === null) return;
+
+    const currentQuestion = questions[currentQuestionIndex];
+    const isAnswerCorrect = selectedOption === currentQuestion.correctAnswer;
+
+    setIsCorrect(isAnswerCorrect);
+    setShowFeedback(true);
+
+    if (isAnswerCorrect) {
+      setScore(score + 1);
+      // Show celebration animation for correct answers
+      setShowCelebration(true);
+      setTimeout(() => setShowCelebration(false), 1500);
+    }
+
+    // Mark this question as answered
+    setAnsweredQuestions([...answeredQuestions, currentQuestion.id]);
+  };
+
+  const handleNext = () => {
+    setShowFeedback(false);
+    setSelectedOption(null);
+
+    // If answer was incorrect and normal difficulty, show easier question
+    if (!isCorrect && questions[currentQuestionIndex].difficulty === 'normal') {
+      // Find corresponding easy question
+      const updatedQuestions = [...questions];
+      updatedQuestions.splice(currentQuestionIndex + 1, 0, easyQuestions[currentQuestionIndex]);
+      setQuestions(updatedQuestions);
+    }
+
+    if (currentQuestionIndex === questions.length - 1) {
+      setCompleted(true);
+    } else {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const handleFinish = () => {
+    // Navigate to the next page or dashboard
+    router.push('/scaffold');
+  };
+
+  const currentQuestion = questions[currentQuestionIndex];
+
+  // Calculate progress percentage
+  const progressPercentage = (answeredQuestions.length / normalQuestions.length) * 100;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-slate-50 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animation styles */}
+      <style jsx>{animationStyles}</style>
+
+      {/* Decorative background elements */}
+      <div className="absolute left-20 top-20 w-40 h-40 bg-purple-200/20 rounded-full blur-xl"></div>
+      <div className="absolute right-40 bottom-20 w-60 h-60 bg-blue-300/20 rounded-full blur-xl"></div>
+      <div className="absolute right-20 top-40 w-20 h-20 bg-fuchsia-200/30 rounded-full blur-md"></div>
+
+      {showCelebration && (
+        <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
+          <div className="absolute animate-celebrate">
+            <span className="text-7xl">🎉</span>
+          </div>
+        </div>
+      )}
+
+      <div className="bg-white backdrop-blur-sm bg-opacity-90 rounded-[2rem] shadow-2xl shadow-purple-200/50 p-8 max-w-2xl w-full relative overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+        {/* Decorative card elements */}
+        <div className="absolute -right-16 -top-16 w-32 h-32 bg-purple-100/50 rounded-full"></div>
+        <div className="absolute left-20 -bottom-10 w-20 h-20 bg-blue-100/50 rounded-full"></div>
+
+        {!completed ? (
+          <>
+            <div className="mb-8 relative z-10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-violet-100 rounded-2xl flex items-center justify-center animate-float">
+                  <Brain className="w-6 h-6 text-violet-600" />
+                </div>
+                <h1 className="text-2xl font-bold text-slate-800">Knowledge Checkpoint</h1>
+              </div>
+
+              <div className="w-full bg-violet-100 rounded-full h-3 mb-2 overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-violet-500 to-purple-500 rounded-full transition-all duration-500"
+                  style={{ width: `${progressPercentage}%` }}
+                ></div>
+              </div>
+              <div className="flex justify-between text-sm text-violet-600 font-medium">
+                <span>Question {Math.min(answeredQuestions.length + 1, normalQuestions.length)} of {normalQuestions.length}</span>
+                <span>{Math.round(progressPercentage)}% Complete</span>
+              </div>
+            </div>
+
+            <div className="mb-8 relative z-10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full text-xl">
+                  {currentQuestion.emoji}
+                </div>
+                <h2 className="text-xl font-medium text-slate-800">{currentQuestion.text}</h2>
+              </div>
+
+              <div className="space-y-3 mt-5">
+                {currentQuestion.options.map((option, index) => (
+                  <div
+                    key={index}
+                    onClick={() => !showFeedback && handleOptionSelect(index)}
+                    className={`p-4 rounded-xl border-2 transition-all ${
+                      selectedOption === index
+                        ? 'border-violet-500 bg-violet-50 shadow-md shadow-violet-100'
+                        : 'border-slate-200 hover:border-violet-300 hover:shadow-sm'
+                    } ${
+                      showFeedback ? 'cursor-not-allowed' : 'cursor-pointer hover:scale-[1.01] transition-transform'
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      <div className={`w-8 h-8 flex items-center justify-center rounded-full mr-3 transition-colors ${
+                        selectedOption === index ? 'bg-violet-500 text-white' : 'bg-slate-100 text-slate-500'
+                      }`}>
+                        {String.fromCharCode(65 + index)}
+                      </div>
+                      <span className="text-slate-700 font-medium">{option}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {showFeedback && (
+              <div className={`p-5 rounded-xl mb-6 ${
+                isCorrect
+                  ? 'bg-green-50 border-2 border-green-100'
+                  : 'bg-red-50 border-2 border-red-100'
+              }`}>
+                <div className="flex items-center gap-3">
+                  {isCorrect ? (
+                    <>
+                      <CheckCircle className="w-6 h-6 text-green-600" />
+                      <p className="font-medium text-green-800">
+                        Excellent! That&apos;s the correct answer!
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <XCircle className="w-6 h-6 text-red-600" />
+                      <p className="font-medium text-red-800">
+                        Incorrect. The correct answer is {currentQuestion.options[currentQuestion.correctAnswer]}.
+                      </p>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-end relative z-10">
+              {!showFeedback ? (
+                <button
+                  onClick={handleSubmit}
+                  disabled={selectedOption === null}
+                  className={`px-6 py-3 rounded-xl font-medium transition-all ${
+                    selectedOption === null
+                      ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-violet-500 to-purple-500 text-white hover:shadow-lg hover:shadow-violet-200 hover:scale-[1.02]'
+                  }`}
+                >
+                  Submit Answer
+                </button>
+              ) : (
+                <button
+                  onClick={handleNext}
+                  className="px-6 py-3 rounded-xl font-medium bg-gradient-to-r from-violet-500 to-purple-500 text-white hover:shadow-lg hover:shadow-violet-200 hover:scale-[1.02] transition-all"
+                >
+                  Next Question
+                </button>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="text-center py-8 relative z-10">
+            <div className="w-24 h-24 mx-auto rounded-full bg-purple-100 flex items-center justify-center mb-6 animate-pulse-slow">
+              <div className="relative">
+                <Award className="w-12 h-12 text-purple-600" />
+                <div className="absolute -top-2 -right-2">
+                  <Sparkles className="w-5 h-5 text-amber-500" />
+                </div>
+              </div>
+            </div>
+
+            <h1 className="text-3xl font-bold text-slate-800 mb-2">
+              Checkpoint Complete!
+            </h1>
+            <p className="text-violet-600 font-medium text-lg mb-4">
+              Great job on completing all questions!
+            </p>
+
+            <div className="bg-gradient-to-br from-violet-50 to-purple-50 p-6 rounded-xl mb-8 inline-block">
+              <div className="text-5xl font-bold mb-2">
+                <span className="bg-gradient-to-r from-violet-600 to-purple-700 text-transparent bg-clip-text">
+                  {score}/{normalQuestions.length}
+                </span>
+              </div>
+              <p className="text-slate-600">Your Score</p>
+            </div>
+
+            <button
+              onClick={handleFinish}
+              className="px-8 py-4 rounded-xl font-medium bg-gradient-to-r from-violet-500 to-purple-600 text-white hover:shadow-lg hover:shadow-violet-200 hover:scale-[1.02] transition-all w-full max-w-xs mx-auto flex items-center justify-center gap-2"
+            >
+              <span>Continue to Dashboard</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
