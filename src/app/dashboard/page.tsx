@@ -560,7 +560,7 @@ export default function PlayfulDashboard() {
           <div className="bg-white rounded-[2rem] p-8 shadow-xl shadow-blue-100/50">
             <div className="flex justify-between items-center mb-6">
               <h2 className="flex items-center gap-3 text-2xl font-bold text-slate-800">
-                <span className="text-3xl">🧠</span> My Learning Plan
+                <span className="text-3xl">🧠</span> My Events
               </h2>
               <div className="relative">
                 <input
@@ -834,7 +834,7 @@ export default function PlayfulDashboard() {
 
               {/* Homework Title Input */}
               <div className="mb-5">
-                <label className="block text-slate-700 font-medium mb-2 flex items-center">
+                <label className="text-slate-700 font-medium mb-2 flex items-center">
                   Homework Title
                   {uploadedFile && (
                     <span className="ml-2 text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full flex items-center gap-1">
