@@ -218,7 +218,7 @@ export default function Pretest() {
         </div>
       )}
 
-      <div className="bg-white backdrop-blur-sm bg-opacity-90 rounded-[2rem] shadow-2xl shadow-purple-200/50 p-8 max-w-2xl w-full relative overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div className="bg-white backdrop-blur-sm bg-opacity-90 rounded-[2rem] shadow-2xl shadow-purple-200/50 p-8 w-full max-w-[95%] md:max-w-[90%] lg:max-w-[85%] xl:max-w-[80%] relative overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
         {/* Decorative card elements */}
         <div className="absolute -right-16 -top-16 w-32 h-32 bg-purple-100/50 rounded-full"></div>
         <div className="absolute left-20 -bottom-10 w-20 h-20 bg-blue-100/50 rounded-full"></div>
@@ -247,35 +247,42 @@ export default function Pretest() {
 
             <div className="mb-8 relative z-10">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full text-xl">
-                  {currentQuestion.emoji}
-                </div>
                 <h2 className="text-xl font-medium text-slate-800">{currentQuestion.text}</h2>
               </div>
 
-              <div className="space-y-3 mt-5">
-                {currentQuestion.options.map((option, index) => (
-                  <div
-                    key={index}
-                    onClick={() => !showFeedback && handleOptionSelect(index)}
-                    className={`p-4 rounded-xl border-2 transition-all ${
-                      selectedOption === index
-                        ? 'border-violet-500 bg-violet-50 shadow-md shadow-violet-100'
-                        : 'border-slate-200 hover:border-violet-300 hover:shadow-sm'
-                    } ${
-                      showFeedback ? 'cursor-not-allowed' : 'cursor-pointer hover:scale-[1.01] transition-transform'
-                    }`}
-                  >
-                    <div className="flex items-center">
-                      <div className={`w-8 h-8 flex items-center justify-center rounded-full mr-3 transition-colors ${
-                        selectedOption === index ? 'bg-violet-500 text-white' : 'bg-slate-100 text-slate-500'
-                      }`}>
-                        {String.fromCharCode(65 + index)}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
+                {currentQuestion.options.map((option, index) => {
+                  // Different color themes for each option
+                  const colorClasses = [
+                    "bg-violet-50 border-violet-200 hover:bg-violet-100",
+                    "bg-blue-50 border-blue-200 hover:bg-blue-100",
+                    "bg-purple-50 border-purple-200 hover:bg-purple-100",
+                    "bg-fuchsia-50 border-fuchsia-200 hover:bg-fuchsia-100"
+                  ];
+
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => !showFeedback && handleOptionSelect(index)}
+                      className={`p-4 rounded-xl border-2 transition-all ${colorClasses[index]} ${
+                        selectedOption === index
+                          ? 'border-violet-500 shadow-md shadow-violet-100'
+                          : 'hover:shadow-sm'
+                      } ${
+                        showFeedback ? 'cursor-not-allowed' : 'cursor-pointer hover:scale-[1.02] transition-transform'
+                      }`}
+                    >
+                      <div className="flex items-center">
+                        <div className={`w-8 h-8 flex items-center justify-center rounded-full mr-3 transition-colors ${
+                          selectedOption === index ? 'bg-violet-500 text-white' : 'bg-white text-slate-500 border border-slate-200'
+                        }`}>
+                          {String.fromCharCode(65 + index)}
+                        </div>
+                        <span className="text-slate-700 font-medium">{option}</span>
                       </div>
-                      <span className="text-slate-700 font-medium">{option}</span>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 

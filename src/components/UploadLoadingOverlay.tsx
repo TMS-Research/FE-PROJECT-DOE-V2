@@ -277,12 +277,12 @@ export default function UploadLoadingOverlay({ isVisible, onComplete }: UploadLo
   // Handle immediate close when button is clicked
   const handleBeginAdventure = () => {
     // Start the expansion animation
-    setIsExpanding(true);
+    // setIsExpanding(true);
 
     // Wait for animation to complete before calling onComplete
-    setTimeout(() => {
-      if (onComplete) onComplete();
-    }, 1500); // Match the animation duration
+    if (onComplete) onComplete();
+    // setTimeout(() => {
+    // }, 1500); // Match the animation duration
   };
 
   // Don't render anything if not visible
