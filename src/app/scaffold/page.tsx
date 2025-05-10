@@ -11,122 +11,166 @@ import {
 const questions = [
   {
     title: 'Computer Processing Capacity',
-    description: 'Dalam bidang ilmu komputasi, superkomputer berperan penting dalam memproses data dalam jumlah besar untuk riset seperti pemodelan iklim, genomik, dan kecerdasan buatan.',
+    description: 'In the field of computational science, supercomputers play a crucial role in processing large amounts of data for research such as climate modeling, genomics, and artificial intelligence.',
     subQuestions: [
       {
-        q: '1.1. Sebuah superkomputer dapat melakukan 1,5 × 10¹⁵ kalkulasi per detik. Hitung berapa banyak kalkulasi yang dapat dilakukan superkomputer ini dalam satu hari. Nyatakan jawaban Anda dalam notasi ilmiah (standard form).',
+        q: '1.1. A supercomputer can perform 1.5 × 10¹⁵ calculations per second. Calculate how many calculations this supercomputer can perform in one day. Express your answer in scientific notation (standard form).',
         hints: [
-          'Berapa detik dalam satu hari? Bagaimana cara mengalikan dengan jumlah kalkulasi per detik?', // nudge
-          'Satu hari memiliki 24 jam × 60 menit × 60 detik = 86.400 detik. Kalikan ini dengan 1,5 × 10¹⁵ kalkulasi per detik.', // outline
-          'Jumlah kalkulasi = 1,5 × 10¹⁵ × 86.400 = 1,296 × 10²⁰ atau 1,296 × 10²⁰ kalkulasi per hari.' // full solve
+          'How many seconds are in one day? How do you multiply this by the number of calculations per second?', // nudge
+          'One day has 24 hours × 60 minutes × 60 seconds = 86,400 seconds. Multiply this by 1.5 × 10¹⁵ calculations per second.', // outline
+          'Number of calculations = 1.5 × 10¹⁵ × 86,400 = 1.296 × 10²⁰ or 1.296 × 10²⁰ calculations per day.' // full solve
         ]
       },
       {
-        q: '1.2. Ekspresikan hasil perhitungan di atas dalam satuan exaflop-hari, di mana 1 exaflop = 1 × 10¹⁸ kalkulasi.',
+        q: '1.2. Express the result of the above calculation in exaflop-days, where 1 exaflop = 1 × 10¹⁸ calculations.',
         hints: [
-          'Bagaimana cara mengkonversi kalkulasi dalam notasi ilmiah ke satuan exaflop?', // nudge
-          'Bagi jumlah kalkulasi (1,296 × 10²⁰) dengan definisi 1 exaflop (1 × 10¹⁸ kalkulasi).', // outline
-          '1,296 × 10²⁰ ÷ (1 × 10¹⁸) = 1,296 × 10² = 129,6 exaflop-hari.' // full solve
+          'How do you convert calculations in scientific notation to exaflop units?', // nudge
+          'Divide the number of calculations (1.296 × 10²⁰) by the definition of 1 exaflop (1 × 10¹⁸ calculations).', // outline
+          '1.296 × 10²⁰ ÷ (1 × 10¹⁸) = 1.296 × 10² = 129.6 exaflop-days.' // full solve
         ]
       },
     ],
   },
   {
     title: 'Energy Consumption',
-    description: 'Superkomputer membutuhkan daya listrik yang sangat besar untuk beroperasi. Pengelolaan konsumsi energi adalah salah satu tantangan dalam pengoperasian superkomputer.',
+    description: 'Supercomputers require enormous electrical power to operate. Managing energy consumption is one of the challenges in operating supercomputers.',
     subQuestions: [
       {
-        q: '2.1. Jika superkomputer tersebut mengonsumsi 2 megawatt listrik per jam, berapa total energi yang digunakan dalam satu hari? Nyatakan jawaban Anda dalam kilowatt-jam (kWh).',
+        q: '2.1. If the supercomputer consumes 2 megawatts of electricity per hour, what is the total energy used in one day? Express your answer in kilowatt-hours (kWh).',
         hints: [
-          'Bagaimana cara mengkonversi dari megawatt ke kilowatt? Berapa jam dalam sehari?', // nudge
-          '1 megawatt = 1.000 kilowatt, dan satu hari memiliki 24 jam. Total energi = daya × waktu.', // outline
-          '2 megawatt × 24 jam = 2.000 kilowatt × 24 jam = 48.000 kWh' // full solve
+          'How do you convert from megawatts to kilowatts? How many hours are in a day?', // nudge
+          '1 megawatt = 1,000 kilowatts, and one day has 24 hours. Total energy = power × time.', // outline
+          '2 megawatts × 24 hours = 2,000 kilowatts × 24 hours = 48,000 kWh' // full solve
         ]
       },
       {
-        q: '2.2. Berapa biaya listrik per hari jika tarif listrik adalah Rp1.500 per kWh?',
+        q: '2.2. What is the electricity cost per day if the electricity rate is $1,500 per kWh?',
         hints: [
-          'Gunakan hasil perhitungan sebelumnya untuk total energi dalam kWh lalu kalikan dengan tarif.', // nudge
-          'Total energi = 48.000 kWh. Kalikan ini dengan tarif Rp1.500 per kWh.', // outline
-          'Biaya = 48.000 kWh × Rp1.500 = Rp72.000.000 per hari.' // full solve
+          'Use the result of the previous calculation for total energy in kWh then multiply by the rate.', // nudge
+          'Total energy = 48,000 kWh. Multiply this by the rate of $1,500 per kWh.', // outline
+          'Cost = 48,000 kWh × $1,500 = $72,000,000 per day.' // full solve
         ]
       },
     ],
   },
   {
     title: 'Comparative Performance',
-    description: 'Membandingkan kinerja superkomputer dengan komputer biasa membantu kita memahami skala perbedaan kapasitas pemrosesan antar teknologi.',
+    description: 'Comparing the performance of supercomputers with regular computers helps us understand the scale of difference in processing capacity between technologies.',
     subQuestions: [
       {
-        q: '3.1. Sebuah komputer biasa hanya mampu melakukan 3 × 10⁹ kalkulasi per detik. Berapa kali lebih cepat superkomputer dibandingkan komputer biasa?',
+        q: '3.1. A regular computer can only perform 3 × 10⁹ calculations per second. How many times faster is the supercomputer compared to a regular computer?',
         hints: [
-          'Bandingkan kemampuan kalkulasi per detik dari superkomputer dengan komputer biasa.', // nudge
-          'Bagi kemampuan kalkulasi superkomputer (1,5 × 10¹⁵) dengan kemampuan komputer biasa (3 × 10⁹).', // outline
-          '1,5 × 10¹⁵ ÷ (3 × 10⁹) = 0,5 × 10⁶ = 5 × 10⁵ kali lebih cepat.' // full solve
+          'Compare the calculation capabilities per second of the supercomputer with the regular computer.', // nudge
+          'Divide the supercomputer\'s calculation capability (1.5 × 10¹⁵) by the regular computer\'s capability (3 × 10⁹).', // outline
+          '1.5 × 10¹⁵ ÷ (3 × 10⁹) = 0.5 × 10⁶ = 5 × 10⁵ times faster.' // full solve
         ]
       },
       {
-        q: '3.2. Jika komputer biasa digunakan selama satu hari, berapa banyak kalkulasi yang dapat dilakukan?',
+        q: '3.2. If a regular computer is used for one day, how many calculations can it perform?',
         hints: [
-          'Mirip dengan pertanyaan 1.1, tapi gunakan nilai kecepatan komputer biasa.', // nudge
-          'Satu hari memiliki 86.400 detik. Kalikan ini dengan 3 × 10⁹ kalkulasi per detik.', // outline
-          'Jumlah kalkulasi = 3 × 10⁹ × 86.400 = 2,592 × 10¹⁴ kalkulasi per hari.' // full solve
+          'Similar to question 1.1, but use the speed value of a regular computer.', // nudge
+          'One day has 86,400 seconds. Multiply this by 3 × 10⁹ calculations per second.', // outline
+          'Number of calculations = 3 × 10⁹ × 86,400 = 2.592 × 10¹⁴ calculations per day.' // full solve
         ]
       },
     ],
   },
   {
     title: 'Application in Research',
-    description: 'Superkomputer memungkinkan para peneliti untuk memecahkan masalah kompleks yang membutuhkan kapasitas kalkulasi tinggi.',
+    description: 'Supercomputers enable researchers to solve complex problems that require high calculation capacity.',
     subQuestions: [
       {
-        q: '4.1. Sebutkan dua bidang penelitian yang sangat diuntungkan dengan adanya superkomputer.',
+        q: '4.1. Name two research fields that greatly benefit from the existence of supercomputers.',
         hints: [
-          'Pikirkan tentang bidang ilmu yang bekerja dengan data skala besar atau perhitungan kompleks.', // nudge
-          'Beberapa contoh termasuk ilmu klimatologi, fisika, biologi komputasional, atau kecerdasan buatan.', // outline
-          'Dua contoh utama: (1) Pemodelan iklim - untuk memprediksi perubahan iklim dengan detail tinggi, (2) Genomik - untuk menganalisis dan memetakan urutan DNA kompleks.' // full solve
+          'Think about fields of science that work with large-scale data or complex calculations.', // nudge
+          'Some examples include climatology, physics, computational biology, or artificial intelligence.', // outline
+          'Two main examples: (1) Climate modeling - to predict climate change with high detail, (2) Genomics - to analyze and map complex DNA sequences.' // full solve
         ]
       },
       {
-        q: '4.2. Jelaskan bagaimana superkomputer membantu di salah satu bidang tersebut.',
+        q: '4.2. Explain how supercomputers help in one of these fields.',
         hints: [
-          'Pikirkan tentang volume data atau kompleksitas perhitungan yang dibutuhkan dalam bidang tersebut.', // nudge
-          'Misalnya dalam pemodelan iklim, superkomputer memungkinkan simulasi atmosfer Bumi dengan resolusi tinggi.', // outline
-          'Dalam pemodelan iklim, superkomputer memungkinkan ilmuwan mensimulasikan interaksi kompleks antara atmosfer, lautan, daratan, dan es pada resolusi tinggi selama periode waktu yang panjang. Tanpa kekuatan komputasi ini, prediksi iklim akan sangat tidak akurat dan tidak dapat diandalkan untuk mengambil keputusan penting terkait perubahan iklim.' // full solve
+          'Think about the volume of data or complexity of calculations needed in that field.', // nudge
+          'For example, in climate modeling, supercomputers allow high-resolution simulations of Earth\'s atmosphere.', // outline
+          'In climate modeling, supercomputers allow scientists to simulate complex interactions between the atmosphere, oceans, land, and ice at high resolution over extended periods. Without this computing power, climate predictions would be highly inaccurate and unreliable for making important decisions related to climate change.' // full solve
         ]
       },
       {
-        q: '4.3. Berikan contoh hasil penelitian yang tidak mungkin dilakukan tanpa superkomputer.',
+        q: '4.3. Give an example of research results that would be impossible without supercomputers.',
         hints: [
-          'Pikirkan penelitian yang membutuhkan perhitungan ekstrem atau analisis data masif.', // nudge
-          'Beberapa contoh: simulasi pembentukan galaksi, pemodelan molekuler untuk pengembangan obat, atau simulasi ledakan nuklir.', // outline
-          'Proyek Human Genome - pemetaan lengkap genom manusia membutuhkan analisis miliaran pasangan basa DNA. Tanpa superkomputer, proyek ini akan membutuhkan waktu puluhan tahun, bukan beberapa tahun saja. Contoh lain: simulasi pembentukan alam semesta yang melacak interaksi miliaran partikel sejak Big Bang hingga pembentukan galaksi.' // full solve
+          'Think about research that requires extreme calculations or massive data analysis.', // nudge
+          'Some examples: galaxy formation simulations, molecular modeling for drug development, or nuclear explosion simulations.', // outline
+          'The Human Genome Project - complete mapping of the human genome requires analysis of billions of DNA base pairs. Without supercomputers, this project would take decades instead of just a few years. Another example: universe formation simulations that track interactions of billions of particles from the Big Bang to galaxy formation.' // full solve
         ]
       },
     ],
   },
   {
     title: 'Data Storage and Transfer',
-    description: 'Superkomputer tidak hanya menghasilkan kalkulasi tetapi juga data dalam volume yang sangat besar, yang memerlukan strategi penyimpanan dan transfer yang efisien.',
+    description: 'Supercomputers not only generate calculations but also data in very large volumes, which require efficient storage and transfer strategies.',
     subQuestions: [
       {
-        q: '5.1. Jika setiap kalkulasi menghasilkan data sebesar 2 byte, berapa total data yang dihasilkan superkomputer dalam satu hari? Nyatakan jawaban Anda dalam terabyte (TB).',
+        q: '5.1. If each calculation generates 2 bytes of data, how much total data does the supercomputer generate in one day? Express your answer in terabytes (TB).',
         hints: [
-          'Gunakan hasil kalkulasi per hari dari pertanyaan 1.1, lalu kalikan dengan 2 byte.', // nudge
-          'Total kalkulasi per hari = 1,296 × 10²⁰. Data per kalkulasi = 2 byte. Konversi ke TB: 1 TB = 10¹² byte.', // outline
-          '1,296 × 10²⁰ × 2 byte = 2,592 × 10²⁰ byte = 2,592 × 10²⁰ ÷ 10¹² = 2,592 × 10⁸ TB = 259,2 petabyte (PB).' // full solve
+          'Use the calculation result per day from question 1.1, then multiply by 2 bytes.', // nudge
+          'Total calculations per day = 1.296 × 10²⁰. Data per calculation = 2 bytes. Convert to TB: 1 TB = 10¹² bytes.', // outline
+          '1.296 × 10²⁰ × 2 bytes = 2.592 × 10²⁰ bytes = 2.592 × 10²⁰ ÷ 10¹² = 2.592 × 10⁸ TB = 259.2 petabytes (PB).' // full solve
         ]
       },
       {
-        q: '5.2. Berapa lama waktu yang dibutuhkan untuk mentransfer data tersebut melalui jaringan dengan kecepatan 10 Gbps?',
+        q: '5.2. How long would it take to transfer this data through a network with a speed of 10 Gbps?',
         hints: [
-          'Konversikan ukuran data ke bit (1 byte = 8 bit) dan kecepatan transfer ke bit per detik.', // nudge
-          'Total data = 2,592 × 10²⁰ byte × 8 = 2,0736 × 10²¹ bit. Kecepatan = 10 × 10⁹ bit per detik. Waktu = Data ÷ Kecepatan.', // outline
-          'Waktu = 2,0736 × 10²¹ bit ÷ (10 × 10⁹ bit/s) = 2,0736 × 10¹² detik = 66.200 tahun! Ini menunjukkan bahwa transfer data dari superkomputer membutuhkan strategi khusus dan jaringan super cepat.' // full solve
+          'Convert the data size to bits (1 byte = 8 bits) and the transfer speed to bits per second.', // nudge
+          'Total data = 2.592 × 10²⁰ bytes × 8 = 2.0736 × 10²¹ bits. Speed = 10 × 10⁹ bits per second. Time = Data ÷ Speed.', // outline
+          'Time = 2.0736 × 10²¹ bits ÷ (10 × 10⁹ bits/s) = 2.0736 × 10¹² seconds = 66,200 years! This shows that transferring data from supercomputers requires special strategies and super-fast networks.' // full solve
         ]
       },
     ],
   },
+];
+
+// Multiple choice questions for transitions
+const transitionQuestions = [
+  {
+    question: "What is the main purpose of a supercomputer?",
+    options: [
+      { key: "A", text: "To play video games" },
+      { key: "B", text: "To process large amounts of data for complex calculations" },
+      { key: "C", text: "To browse the internet" },
+      { key: "D", text: "To store personal files" }
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "Which unit is used to measure supercomputer performance?",
+    options: [
+      { key: "A", text: "Megahertz (MHz)" },
+      { key: "B", text: "Exaflops" },
+      { key: "C", text: "Gigabytes (GB)" },
+      { key: "D", text: "Kilowatts (kW)" }
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "What is a common challenge in operating supercomputers?",
+    options: [
+      { key: "A", text: "Finding enough desk space" },
+      { key: "B", text: "Managing energy consumption" },
+      { key: "C", text: "Installing software updates" },
+      { key: "D", text: "Connecting to WiFi" }
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "Which field benefits most from supercomputers?",
+    options: [
+      { key: "A", text: "Social media" },
+      { key: "B", text: "Climate modeling and scientific research" },
+      { key: "C", text: "Online shopping" },
+      { key: "D", text: "Video streaming" }
+    ],
+    correctAnswer: 1
+  }
 ];
 
 // Animation keyframes
@@ -159,7 +203,10 @@ export default function ScaffoldPage() {
   const [submitted, setSubmitted] = React.useState<{[key: string]: boolean}>({});
   const [xpLost, setXpLost] = React.useState<{[key: string]: number}>({});
   const [feedback, setFeedback] = React.useState<{[key: string]: boolean | null}>({});
-  const [activeSubQuestion, setActiveSubQuestion] = React.useState<string>("0-0"); // Format: "questionIndex-subQuestionIndex"
+  const [activeSubQuestion, setActiveSubQuestion] = React.useState<string>("0-0");
+  const [showTransitionPopup, setShowTransitionPopup] = React.useState(false);
+  const [selectedTransitionAnswer, setSelectedTransitionAnswer] = React.useState<number | null>(null);
+  const [transitionFeedback, setTransitionFeedback] = React.useState<boolean | null>(null);
 
   // Calculate progress percentage
   const progressPercentage = ((current + 1) / questions.length) * 100;
@@ -192,7 +239,7 @@ export default function ScaffoldPage() {
     const userAnswer = answers[key]?.trim().toLowerCase() || '';
     let isCorrect = false;
 
-    // Simple evaluation logic for demonstration
+  // Simple evaluation logic for demonstration
     if (questionIndex === 0) { // Computer Processing Capacity
       if (subIndex === 0) {
         isCorrect = userAnswer.includes('1.296') && userAnswer.includes('10') && (userAnswer.includes('20') || userAnswer.includes('²⁰'));
@@ -225,6 +272,26 @@ export default function ScaffoldPage() {
     }
   };
 
+  const handleNextQuestion = () => {
+    if (current < questions.length - 1) {
+      setShowTransitionPopup(true);
+      setSelectedTransitionAnswer(null);
+      setTransitionFeedback(null);
+    }
+  };
+
+  const handleTransitionAnswer = (answerIndex: number) => {
+    setSelectedTransitionAnswer(answerIndex);
+    const isCorrect = answerIndex === transitionQuestions[current].correctAnswer;
+    setTransitionFeedback(isCorrect);
+
+    // Wait 1.5 seconds before moving to next question
+    setTimeout(() => {
+      setShowTransitionPopup(false);
+      setCurrent(current + 1);
+    }, 1500);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-50 to-slate-50 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Animation styles */}
@@ -235,7 +302,47 @@ export default function ScaffoldPage() {
       <div className="absolute right-40 bottom-20 w-60 h-60 bg-blue-300/20 rounded-full blur-xl"></div>
       <div className="absolute right-20 top-40 w-20 h-20 bg-fuchsia-200/30 rounded-full blur-md"></div>
 
-      <div className="bg-white backdrop-blur-sm bg-opacity-90 rounded-[2rem] shadow-2xl shadow-purple-200/50 p-8 max-w-2xl w-full relative overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      {/* Transition Popup */}
+      {showTransitionPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl">
+            <h3 className="text-xl font-semibold text-slate-800 mb-4">
+              Quick Check!
+            </h3>
+            <p className="text-slate-600 mb-4">
+              {transitionQuestions[current].question}
+            </p>
+            <div className="space-y-2">
+              {transitionQuestions[current].options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleTransitionAnswer(index)}
+                  disabled={selectedTransitionAnswer !== null}
+                  className={`w-full p-3 rounded-lg text-left transition-all ${
+                    selectedTransitionAnswer === index
+                      ? transitionFeedback
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-700'
+                      : 'bg-violet-50 hover:bg-violet-100 text-slate-700'
+                  }`}
+                >
+                  <span className="font-semibold mr-2">{option.key}.</span>
+                  {option.text}
+                </button>
+              ))}
+            </div>
+            {transitionFeedback !== null && (
+              <div className={`mt-4 p-3 rounded-lg ${
+                transitionFeedback ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+              }`}>
+                {transitionFeedback ? 'Correct! Moving to next question...' : 'Not quite right. Moving to next question...'}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="bg-white backdrop-blur-sm bg-opacity-90 rounded-[2rem] shadow-2xl shadow-purple-200/50 p-8 w-full max-w-[95%] md:max-w-[90%] lg:max-w-[85%] xl:max-w-[80%] relative overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
         {/* Decorative card elements */}
         <div className="absolute -right-16 -top-16 w-32 h-32 bg-purple-100/50 rounded-full"></div>
         <div className="absolute left-20 -bottom-10 w-20 h-20 bg-blue-100/50 rounded-full"></div>
@@ -328,7 +435,7 @@ export default function ScaffoldPage() {
                               : 'border-red-300 focus:border-red-400 focus:ring-red-300/40'
                             : 'border-violet-200 focus:border-violet-400 focus:ring-violet-300/40'
                         }`}
-                        placeholder="Tulis jawaban Anda di sini..."
+                        placeholder="Write your answer here..."
                         value={answers[qKey] || ''}
                         onChange={(e) => handleAnswerChange(current, subIndex, e.target.value)}
                         disabled={isSubmitted && answerFeedback}
@@ -340,8 +447,8 @@ export default function ScaffoldPage() {
                           answerFeedback ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                         }`}>
                           {answerFeedback
-                            ? <><CheckCircle2 size={16} /> <span>Jawaban benar!</span></>
-                            : <><XCircle size={16} /> <span>Jawaban kurang tepat. Coba lagi atau gunakan hint.</span></>
+                            ? <><CheckCircle2 size={16} /> <span>Correct answer!</span></>
+                            : <><XCircle size={16} /> <span>Not quite right. Try again or use a hint.</span></>
                           }
                         </div>
                       )}
@@ -424,7 +531,7 @@ export default function ScaffoldPage() {
           </button>
 
           <button
-            onClick={() => current < questions.length - 1 ? setCurrent(current + 1) : null}
+            onClick={handleNextQuestion}
             className="px-6 py-3 rounded-xl font-medium bg-gradient-to-r from-violet-500 to-purple-500 text-white hover:shadow-lg hover:shadow-violet-200 hover:scale-[1.02] transition-all"
           >
             {current < questions.length - 1 ? 'Next Question' : 'Submit'}

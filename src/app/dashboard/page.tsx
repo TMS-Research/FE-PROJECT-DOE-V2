@@ -2,7 +2,7 @@
 
 import UploadLoadingOverlay from "@/components/UploadLoadingOverlay";
 import { AlertCircle, Award, Book, Brain, Calendar, Calendar as CalendarIcon, ClipboardList, Clock, File, Home, Settings, Sparkles, Star, Upload, User, X } from "lucide-react";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 // Add keyframe animation
@@ -49,10 +49,12 @@ export default function PlayfulDashboard() {
   const [deadlineError, setDeadlineError] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
+  const router = useRouter();
+
   // Handle upload completion
   const handleUploadComplete = () => {
     setIsUploading(false);
-    router.push("/dashboard/pretest");
+    router.push("/pretest");
   };
 
   // Handle file drop
@@ -357,7 +359,7 @@ export default function PlayfulDashboard() {
                 <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
                   <Book size={18} className="text-blue-600" />
                 </div>
-                <span>Study</span>
+                <span>Homework</span>
               </a>
             </li>
             <li>
@@ -365,7 +367,7 @@ export default function PlayfulDashboard() {
                 <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
                   <ClipboardList size={18} className="text-amber-600" />
                 </div>
-                <span>Tasks</span>
+                <span>Exam</span>
               </a>
             </li>
             <li>
@@ -444,7 +446,7 @@ export default function PlayfulDashboard() {
                 <p className="mb-6 max-w-md text-violet-100 text-lg">
                   {upcomingExam.subject} exam in {upcomingExam.timeRemaining}. Activate Exam Cram mode for quick preparation.
                 </p>
-                <button className="bg-white text-violet-700 font-medium py-3 px-8 rounded-full shadow-lg shadow-violet-700/20 hover:bg-violet-50 transition-colors text-lg">
+                <button className="bg-white text-violet-700 font-medium py-3 px-8 rounded-xl shadow-lg shadow-violet-700/20 hover:bg-violet-50 transition-colors text-lg">
                   Start Studying Now
                 </button>
               </div>
