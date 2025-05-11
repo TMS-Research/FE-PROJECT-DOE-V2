@@ -9,6 +9,7 @@ interface LearningFlowProps {
   materials: LearningMaterial[];
   onComplete: () => void;
   onExit: () => void;
+  xpPoints?: number;
 }
 
 const LearningFlow: React.FC<LearningFlowProps> = ({

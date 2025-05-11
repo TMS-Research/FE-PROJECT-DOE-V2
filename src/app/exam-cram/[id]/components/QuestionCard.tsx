@@ -7,10 +7,10 @@ import { Question } from '../store';
 
 interface QuestionCardProps {
   question: Question;
-  userAnswer?: any;
+  userAnswer?: string | number | null;
   isReviewed?: boolean;
   isCorrect?: boolean;
-  onAnswer: (questionId: string, answer: any, isCorrect: boolean) => void;
+  onAnswer: (questionId: string, answer: string | number | null, isCorrect: boolean) => void;
 }
 
 export default function QuestionCard({

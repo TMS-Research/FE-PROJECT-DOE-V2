@@ -8,11 +8,10 @@ import { Question } from '../store';
 interface ResultSummaryProps {
   questions: Question[];
   userAnswers: Record<string, {
-    answer: any;
+    answer: string | number | null;
     isCorrect: boolean;
     reviewed: boolean;
   }>;
-  confidenceScore: number;
   masteryScore: number;
   onRetry: () => void;
   onExit: () => void;
@@ -21,7 +20,6 @@ interface ResultSummaryProps {
 export default function ResultSummary({
   questions,
   userAnswers,
-  confidenceScore,
   masteryScore,
   onRetry,
   onExit

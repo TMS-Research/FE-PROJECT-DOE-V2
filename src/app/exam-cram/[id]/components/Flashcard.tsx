@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { LearningMaterial } from '../mock-learning-data';
 import { RotateCw, ChevronRight, Sparkles } from 'lucide-react';
@@ -17,14 +17,14 @@ const Flashcard: React.FC<FlashcardProps> = ({
   const [isFlipped, setIsFlipped] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const handleFlip = () => {
+  const handleFlip = useCallback(() => {
     if (!isAnimating) {
       setIsAnimating(true);
-      setIsFlipped(!isFlipped);
+      setIsFlipped(prevFlipped => !prevFlipped);
       // Reset animation state after animation completes
       setTimeout(() => setIsAnimating(false), 500);
     }
-  };
+  }, [isAnimating]);
 
   // Add keyboard shortcut for flipping with spacebar
   useEffect(() => {
@@ -39,7 +39,7 @@ const Flashcard: React.FC<FlashcardProps> = ({
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isAnimating]);
+  }, [isAnimating, handleFlip]);
 
   return (
     <div className="max-w-lg mx-auto perspective-1000 w-full">

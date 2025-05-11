@@ -11,7 +11,7 @@ export interface Question {
 }
 
 export interface UserAnswer {
-  answer: any;
+  answer: string | number | null;
   isCorrect: boolean;
   reviewed: boolean;
   timestamp?: Date;
@@ -32,7 +32,7 @@ export interface ExamCramState {
   setQuestions: (questions: Question[]) => void;
   goToNextQuestion: () => void;
   goToPreviousQuestion: () => void;
-  submitAnswer: (questionId: string, answer: any, isCorrect: boolean) => void;
+  submitAnswer: (questionId: string, answer: string | number | null, isCorrect: boolean) => void;
   completeExam: () => void;
   restartExam: () => void;
   toggleSupportMaterial: () => void;
