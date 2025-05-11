@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "./providers";
@@ -7,6 +7,13 @@ import Providers from "./providers";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+});
+
+const poppins = Poppins({
+  weight: ['300', '400', '500', '600', '700'],  // Tambahkan weight yang Anda butuhkan
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-poppins', // Ini akan membuat CSS variable yang bisa digunakan
 });
 
 const geistMono = localFont({
@@ -28,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
       >
         <Providers>{children}</Providers>
       </body>

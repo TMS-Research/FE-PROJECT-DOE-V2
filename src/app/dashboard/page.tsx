@@ -1,9 +1,14 @@
 "use client";
 
 import UploadLoadingOverlay from "@/components/UploadLoadingOverlay";
-import { AlertCircle, Award, Book, Brain, Calendar, Calendar as CalendarIcon, ClipboardList, Clock, File, Home, Settings, Sparkles, Star, Upload, User, X } from "lucide-react";
+import { AlertCircle, Award, Book, Brain, Calendar, Calendar as CalendarIcon, ChevronLeft, ChevronRight, ClipboardList, Clock, File, Home, Settings, Sparkles, Star, Upload, User, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 // Add keyframe animation
 const animationStyles = `
@@ -39,6 +44,9 @@ const animationStyles = `
 `;
 
 export default function PlayfulDashboard() {
+  // Initialize the router
+  const router = useRouter();
+
   // Modal state
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -48,8 +56,6 @@ export default function PlayfulDashboard() {
   const [titleError, setTitleError] = useState(false);
   const [deadlineError, setDeadlineError] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-
-  const router = useRouter();
 
   // Handle upload completion
   const handleUploadComplete = () => {
@@ -87,12 +93,20 @@ export default function PlayfulDashboard() {
 
     // Set the homework title based on the file name (remove extension)
     const fileName = file.name;
-    const fileNameWithoutExtension = fileName.split('.').slice(0, -1).join('.');
+    const fileNameWithoutExtension = fileName.split(".").slice(0, -1).join(".");
 
     // Only update title if it's currently empty
     if (!homeworkTitle.trim()) {
       setHomeworkTitle(fileNameWithoutExtension);
     }
+  };
+
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+  const paginationRef = useRef(null);
+
+  const handleExamCram = (id: string | number) => {
+    router.push(`/exam-cram/${id}`);
   };
 
   const removeFile = () => {
@@ -186,13 +200,14 @@ export default function PlayfulDashboard() {
 
   // Exam data
   const upcomingExam = {
-    subject: "Biology",
-    topic: "Reproductive System",
-    timeRemaining: "23 hours left",
-    totalConcepts: 24,
-    masteredConcepts: 18,
+    id: "physics101",
+    subject: "Physics",
+    topic: "Mechanics",
+    timeRemaining: "3 days",
+    totalConcepts: 42,
+    masteredConcepts: 28,
     confidence: 75,
-    weakAreas: ["Fertilization", "Reproductive Hormones"],
+    weakAreas: ["Fluid Dynamics", "Thermodynamics"]
   };
 
   // Mock predictions
@@ -210,7 +225,7 @@ export default function PlayfulDashboard() {
       description: "Learn basic medical language for effective communication.",
       status: "completed",
       type: "course",
-      icon: "🩺"
+      icon: "🩺",
     },
     {
       id: 2,
@@ -225,8 +240,8 @@ export default function PlayfulDashboard() {
       participants: [
         "/avatars/avatar-1.png",
         "/avatars/avatar-2.png",
-        "/avatars/avatar-3.png"
-      ]
+        "/avatars/avatar-3.png",
+      ],
     },
     {
       id: 3,
@@ -234,15 +249,16 @@ export default function PlayfulDashboard() {
       description: "Understand the structure and function of the human body.",
       status: "completed",
       type: "course",
-      icon: "🧠"
+      icon: "🧠",
     },
     {
       id: 4,
       title: "Medical Ethics and Professionalism",
-      description: "Understand ethical principles and professionalism in healthcare.",
+      description:
+        "Understand ethical principles and professionalism in healthcare.",
       status: "upcoming",
       type: "course",
-      icon: "⚖️"
+      icon: "⚖️",
     },
     {
       id: 5,
@@ -250,15 +266,15 @@ export default function PlayfulDashboard() {
       description: "Study the cellular and molecular basis of common diseases.",
       status: "upcoming",
       type: "course",
-      icon: "🔬"
-    }
+      icon: "🔬",
+    },
   ];
 
   // Learning path stats
   const pathStats = {
     total: 26,
     completed: 2,
-    upcoming: 23
+    upcoming: 23,
   };
 
   return (
@@ -314,7 +330,9 @@ export default function PlayfulDashboard() {
         <div className="p-6 border-b border-slate-100">
           <div className="flex items-center gap-3">
             <div className="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center relative shadow-lg shadow-indigo-200">
-              <span className="font-bold text-white text-xl">{user.name.charAt(0)}</span>
+              <span className="font-bold text-white text-xl">
+                {user.name.charAt(0)}
+              </span>
               <div className="absolute -bottom-1 -right-1 bg-amber-400 rounded-full p-1 shadow-sm">
                 <Sparkles className="w-4 h-4 text-white" />
               </div>
@@ -332,7 +350,9 @@ export default function PlayfulDashboard() {
           <div className="mt-4">
             <div className="flex justify-between text-xs font-medium mb-1">
               <span className="text-indigo-600">Level Progress</span>
-              <span className="text-indigo-600">{user.xp}/{user.nextLevelXp}</span>
+              <span className="text-indigo-600">
+                {user.xp}/{user.nextLevelXp}
+              </span>
             </div>
             <div className="w-full h-3 bg-indigo-100 rounded-full overflow-hidden">
               <div
@@ -347,7 +367,10 @@ export default function PlayfulDashboard() {
         <nav className="flex-1 py-6 px-4">
           <ul className="space-y-2">
             <li>
-              <a href="#" className="flex items-center gap-3 px-5 py-3 text-white bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl font-medium shadow-md shadow-indigo-200">
+              <a
+                href="#"
+                className="flex items-center gap-3 px-5 py-3 text-white bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl font-medium shadow-md shadow-indigo-200"
+              >
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                   <Home size={18} className="text-white" />
                 </div>
@@ -355,7 +378,10 @@ export default function PlayfulDashboard() {
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-indigo-50 rounded-2xl font-medium transition-all">
+              <a
+                href="#"
+                className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-indigo-50 rounded-2xl font-medium transition-all"
+              >
                 <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
                   <Book size={18} className="text-blue-600" />
                 </div>
@@ -363,7 +389,10 @@ export default function PlayfulDashboard() {
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-indigo-50 rounded-2xl font-medium transition-all">
+              <a
+                href="#"
+                className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-indigo-50 rounded-2xl font-medium transition-all"
+              >
                 <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
                   <ClipboardList size={18} className="text-amber-600" />
                 </div>
@@ -371,7 +400,10 @@ export default function PlayfulDashboard() {
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-indigo-50 rounded-2xl font-medium transition-all">
+              <a
+                href="#"
+                className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-indigo-50 rounded-2xl font-medium transition-all"
+              >
                 <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
                   <Calendar size={18} className="text-emerald-600" />
                 </div>
@@ -393,7 +425,9 @@ export default function PlayfulDashboard() {
               </div>
               <h3 className="text-xl font-bold">Upload Homework</h3>
             </div>
-            <p className="text-sm text-teal-50 mb-4">Get help and quick feedback on your assignments</p>
+            <p className="text-sm text-teal-50 mb-4">
+              Get help and quick feedback on your assignments
+            </p>
             <button
               className="w-full bg-white text-teal-600 font-medium py-3 px-5 rounded-xl text-sm shadow-lg shadow-emerald-500/20 hover:bg-teal-50 transition-colors"
               onClick={() => setShowUploadModal(true)}
@@ -422,7 +456,9 @@ export default function PlayfulDashboard() {
       <div className="flex-1 overflow-auto py-8 px-16">
         {/* Header with user greeting */}
         <header className="mb-8 flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-slate-800">Hi, {user.name}! 👋</h1>
+          <h1 className="text-3xl font-bold text-slate-800">
+            Hi, {user.name}! 👋
+          </h1>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 bg-gradient-to-r from-amber-400 to-orange-400 px-4 py-2 rounded-full font-medium text-white shadow-lg shadow-amber-200/50">
               <Star className="w-4 h-4 text-white" fill="white" />
@@ -434,40 +470,177 @@ export default function PlayfulDashboard() {
         {/* Main content grid */}
         <div className="space-y-8">
           {/* Exam Cram Banner */}
-          <div className="bg-gradient-to-r from-violet-500 to-fuchsia-600 rounded-[2.5rem] p-8 text-white shadow-xl shadow-violet-200/50 overflow-hidden relative">
-            <div className="flex justify-between items-center relative z-10">
-              <div>
-                <div className="flex items-center mb-3">
-                  <div className="w-10 h-10 bg-white/20 rounded-2xl flex items-center justify-center mr-3">
-                    <Brain className="w-6 h-6" />
-                  </div>
-                  <h2 className="text-2xl font-bold">Exam Cram Ready!</h2>
-                </div>
-                <p className="mb-6 max-w-md text-violet-100 text-lg">
-                  {upcomingExam.subject} exam in {upcomingExam.timeRemaining}. Activate Exam Cram mode for quick preparation.
-                </p>
-                <button className="bg-white text-violet-700 font-medium py-3 px-8 rounded-xl shadow-lg shadow-violet-700/20 hover:bg-violet-50 transition-colors text-lg">
-                  Start Studying Now
-                </button>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="relative w-32 h-32">
-                  <svg className="w-32 h-32 rotate-[-90deg]" viewBox="0 0 36 36">
-                    <circle cx="18" cy="18" r="16" fill="none" className="stroke-violet-400/30" strokeWidth="3" />
-                    <circle cx="18" cy="18" r="16" fill="none" className="stroke-white" strokeWidth="3"
-                      strokeDasharray="100" strokeDashoffset={100 - upcomingExam.confidence} strokeLinecap="round" />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-3xl font-bold">{upcomingExam.confidence}%</span>
-                    <span className="text-sm text-violet-200">Confidence</span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div className="absolute -right-16 -bottom-16 w-64 h-64 bg-violet-400/30 rounded-full"></div>
-            <div className="absolute right-20 top-16 w-32 h-32 bg-fuchsia-400/20 rounded-full"></div>
-            <div className="absolute left-40 bottom-0 w-16 h-16 bg-white/10 rounded-full"></div>
+          {/* Exam Cards Carousel */}
+          <div className="mt-8">
+            <div className="relative">
+              <Swiper
+                modules={[Navigation, Pagination]}
+                spaceBetween={30}
+                slidesPerView={1}
+                navigation={{
+                  prevEl: prevRef.current,
+                  nextEl: nextRef.current,
+                }}
+                pagination={{
+                  el: paginationRef.current,
+                  clickable: true,
+                }}
+                onBeforeInit={(swiper) => {
+                  // @ts-expect-error - Swiper types issue
+                  swiper.params.navigation.prevEl = prevRef.current;
+                  // @ts-expect-error - Swiper types issue
+                  swiper.params.navigation.nextEl = nextRef.current;
+                  // @ts-expect-error - Swiper types issue
+                  swiper.params.pagination.el = paginationRef.current;
+                }}
+                className="exam-cram-swiper"
+              >
+                <SwiperSlide>
+                  <div className="bg-gradient-to-r from-violet-500 to-fuchsia-600 rounded-[2rem] p-8 text-white shadow-xl shadow-violet-200/50 overflow-hidden relative transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+                    <div className="flex justify-between items-center relative z-10">
+                      <div>
+                        <div className="flex items-center mb-3">
+                          <div className="w-10 h-10 bg-white/20 rounded-2xl flex items-center justify-center mr-3">
+                            <Brain className="w-6 h-6" />
+                          </div>
+                          <h2 className="text-2xl font-bold">Exam Cram Ready!</h2>
+                        </div>
+                        <p className="mb-6 max-w-md text-violet-100 text-lg">
+                          {upcomingExam.subject} exam in {upcomingExam.timeRemaining}. Activate Exam Cram mode for quick preparation.
+                        </p>
+                        <button
+                          onClick={() => handleExamCram(upcomingExam.id)}
+                          className="bg-white text-violet-700 font-medium py-3 px-8 rounded-full shadow-lg shadow-violet-700/20 hover:bg-violet-50 transition-all duration-300 hover:shadow-xl text-lg"
+                        >
+                          Start Studying Now
+                        </button>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div className="relative w-32 h-32">
+                          <svg
+                            className="w-32 h-32 rotate-[-90deg]"
+                            viewBox="0 0 36 36"
+                          >
+                            <circle
+                              cx="18"
+                              cy="18"
+                              r="16"
+                              fill="none"
+                              className="stroke-violet-400/30"
+                              strokeWidth="3"
+                            />
+                            <circle
+                              cx="18"
+                              cy="18"
+                              r="16"
+                              fill="none"
+                              className="stroke-white"
+                              strokeWidth="3"
+                              strokeDasharray="100"
+                              strokeDashoffset={100 - upcomingExam.confidence}
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <span className="text-3xl font-bold">{upcomingExam.confidence}%</span>
+                            <span className="text-sm text-violet-200">Confidence</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="absolute -right-16 -bottom-16 w-64 h-64 bg-purple-400/30 rounded-full"></div>
+                    <div className="absolute right-20 top-16 w-32 h-32 bg-indigo-400/20 rounded-full"></div>
+                    <div className="absolute left-40 bottom-0 w-16 h-16 bg-white/10 rounded-full"></div>
+                  </div>
+                </SwiperSlide>
+
+                {/* Second Exam Card (Example) */}
+                <SwiperSlide>
+                  <div className="bg-gradient-to-r from-blue-500 to-cyan-600 rounded-[2rem] p-8 text-white shadow-xl shadow-blue-200/50 overflow-hidden relative transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+                    <div className="flex justify-between items-center relative z-10">
+                      <div>
+                        <div className="flex items-center mb-3">
+                          <div className="w-10 h-10 bg-white/20 rounded-2xl flex items-center justify-center mr-3">
+                            <Brain className="w-6 h-6" />
+                          </div>
+                          <h2 className="text-2xl font-bold">
+                            Math Final Coming Up!
+                          </h2>
+                        </div>
+                        <p className="mb-6 max-w-md text-blue-100 text-lg">
+                          Mathematics final exam in 5 days. Review calculus and
+                          algebra concepts.
+                        </p>
+                        <button
+                          onClick={() => handleExamCram("Mathematics")}
+                          className="bg-white text-blue-700 font-medium py-3 px-8 rounded-full shadow-lg shadow-blue-700/20 hover:bg-blue-50 transition-all duration-300 hover:shadow-xl text-lg"
+                        >
+                          Start Studying Now
+                        </button>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div className="relative w-32 h-32">
+                          <svg
+                            className="w-32 h-32 rotate-[-90deg]"
+                            viewBox="0 0 36 36"
+                          >
+                            <circle
+                              cx="18"
+                              cy="18"
+                              r="16"
+                              fill="none"
+                              className="stroke-blue-400/30"
+                              strokeWidth="3"
+                            />
+                            <circle
+                              cx="18"
+                              cy="18"
+                              r="16"
+                              fill="none"
+                              className="stroke-white"
+                              strokeWidth="3"
+                              strokeDasharray="100"
+                              strokeDashoffset="35"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <span className="text-3xl font-bold">65%</span>
+                            <span className="text-sm text-blue-200">
+                              Confidence
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="absolute -right-16 -bottom-16 w-64 h-64 bg-blue-400/30 rounded-full"></div>
+                    <div className="absolute right-20 top-16 w-32 h-32 bg-cyan-400/20 rounded-full"></div>
+                    <div className="absolute left-40 bottom-0 w-16 h-16 bg-white/10 rounded-full"></div>
+                  </div>
+                </SwiperSlide>
+              </Swiper>
+              {/* Navigation Buttons */}
+              <button
+                ref={prevRef}
+                className="absolute -left-6 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white w-12 h-12 rounded-full flex items-center justify-center shadow-md transition-all duration-300 hover:shadow-lg border border-indigo-100 hover:animate-none"
+              >
+                <ChevronLeft className="w-5 h-5 text-indigo-600" />
+              </button>
+              <button
+                ref={nextRef}
+                className="absolute -right-6 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 hover:bg-white w-12 h-12 rounded-full flex items-center justify-center shadow-md transition-all duration-300 hover:shadow-lg border border-indigo-100 hover:animate-none"
+              >
+                <ChevronRight className="w-5 h-5 text-indigo-600" />
+              </button>
+              {/* Pagination */}
+              <div
+                ref={paginationRef}
+                className="swiper-pagination flex justify-center mt-4 gap-2"
+              ></div>
+            </div>
           </div>
 
           {/* Statistics Card */}
@@ -481,19 +654,29 @@ export default function PlayfulDashboard() {
             <div className="grid grid-cols-4 gap-5">
               <div className="bg-gradient-to-br from-blue-100 to-blue-50 p-4 rounded-2xl border-2 border-blue-200/50">
                 <p className="text-blue-700 mb-1 font-medium">Study Time</p>
-                <p className="text-2xl font-bold text-blue-800">{statistics.studyTime}</p>
+                <p className="text-2xl font-bold text-blue-800">
+                  {statistics.studyTime}
+                </p>
               </div>
               <div className="bg-gradient-to-br from-green-100 to-green-50 p-4 rounded-2xl border-2 border-green-200/50">
-                <p className="text-green-700 mb-1 font-medium">Tasks Completed</p>
-                <p className="text-2xl font-bold text-green-800">{statistics.tasksCompleted}</p>
+                <p className="text-green-700 mb-1 font-medium">
+                  Tasks Completed
+                </p>
+                <p className="text-2xl font-bold text-green-800">
+                  {statistics.tasksCompleted}
+                </p>
               </div>
               <div className="bg-gradient-to-br from-amber-100 to-amber-50 p-4 rounded-2xl border-2 border-amber-200/50">
                 <p className="text-amber-700 mb-1 font-medium">Average Score</p>
-                <p className="text-2xl font-bold text-amber-800">{statistics.averageScore}</p>
+                <p className="text-2xl font-bold text-amber-800">
+                  {statistics.averageScore}
+                </p>
               </div>
               <div className="bg-gradient-to-br from-purple-100 to-purple-50 p-4 rounded-2xl border-2 border-purple-200/50">
                 <p className="text-purple-700 mb-1 font-medium">Study Streak</p>
-                <p className="text-2xl font-bold text-purple-800">{statistics.studyStreak} days</p>
+                <p className="text-2xl font-bold text-purple-800">
+                  {statistics.studyStreak} days
+                </p>
               </div>
             </div>
           </div>
@@ -507,11 +690,13 @@ export default function PlayfulDashboard() {
               Task List
             </h2>
             <div className="space-y-4">
-              {tasks.map(task => (
+              {tasks.map((task) => (
                 <div
                   key={task.id}
                   className={`p-5 rounded-2xl flex justify-between items-center shadow-md ${
-                    task.urgent ? 'bg-gradient-to-r from-red-50 to-rose-50 border-l-4 border-red-500' : 'bg-gradient-to-r from-blue-50 to-indigo-50'
+                    task.urgent
+                      ? "bg-gradient-to-r from-red-50 to-rose-50 border-l-4 border-red-500"
+                      : "bg-gradient-to-r from-blue-50 to-indigo-50"
                   }`}
                 >
                   <div>
@@ -525,7 +710,9 @@ export default function PlayfulDashboard() {
                         </span>
                       )}
                     </div>
-                    <h3 className="font-bold text-slate-800 mt-2 text-lg">{task.title}</h3>
+                    <h3 className="font-bold text-slate-800 mt-2 text-lg">
+                      {task.title}
+                    </h3>
                     <p className="text-sm text-slate-500 flex items-center mt-1">
                       <Clock className="w-4 h-4 mr-1 text-slate-400" />
                       {task.deadline}
@@ -537,14 +724,28 @@ export default function PlayfulDashboard() {
                       <div
                         className="absolute inset-0 rounded-full border-4 border-indigo-500"
                         style={{
-                          clipPath: `path('M 50 0 A 50 50 0 ${task.progress > 50 ? 1 : 0} 1 ${
-                            50 + 50 * Math.cos((task.progress / 100) * 2 * Math.PI - Math.PI / 2)
+                          clipPath: `path('M 50 0 A 50 50 0 ${
+                            task.progress > 50 ? 1 : 0
+                          } 1 ${
+                            50 +
+                            50 *
+                              Math.cos(
+                                (task.progress / 100) * 2 * Math.PI -
+                                  Math.PI / 2
+                              )
                           } ${
-                            50 + 50 * Math.sin((task.progress / 100) * 2 * Math.PI - Math.PI / 2)
+                            50 +
+                            50 *
+                              Math.sin(
+                                (task.progress / 100) * 2 * Math.PI -
+                                  Math.PI / 2
+                              )
                           } L 50 50 Z')`,
                         }}
                       ></div>
-                      <span className="text-lg font-bold text-indigo-700">{task.progress}%</span>
+                      <span className="text-lg font-bold text-indigo-700">
+                        {task.progress}%
+                      </span>
                     </div>
                     <button className="mt-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full font-medium hover:bg-indigo-200 transition-colors">
                       Work on it
@@ -592,7 +793,9 @@ export default function PlayfulDashboard() {
             <div className="flex gap-6 mb-8">
               <div className="w-20 h-20 flex items-center justify-center bg-blue-100 rounded-3xl">
                 <div className="text-lg font-bold text-center">
-                  <div className="text-3xl text-blue-800">{pathStats.total}</div>
+                  <div className="text-3xl text-blue-800">
+                    {pathStats.total}
+                  </div>
                   <div className="text-xs text-blue-600 mt-1">Total</div>
                 </div>
               </div>
@@ -603,19 +806,34 @@ export default function PlayfulDashboard() {
                   </div>
                 </div>
                 <div className="text-lg font-bold text-center">
-                  <div className="text-3xl text-green-800">{pathStats.completed}</div>
+                  <div className="text-3xl text-green-800">
+                    {pathStats.completed}
+                  </div>
                   <div className="text-xs text-green-600 mt-1">Completed</div>
                 </div>
               </div>
               <div className="w-20 h-20 flex items-center justify-center bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
                 <div className="text-lg font-bold text-center">
-                  <div className="text-3xl text-gray-800">{pathStats.upcoming}</div>
+                  <div className="text-3xl text-gray-800">
+                    {pathStats.upcoming}
+                  </div>
                   <div className="text-xs text-gray-600 mt-1">Upcoming</div>
                 </div>
               </div>
               <div className="ml-auto">
                 <button className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center text-green-800 hover:bg-green-200 transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-plus">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-plus"
+                  >
                     <path d="M5 12h14" />
                     <path d="M12 5v14" />
                   </svg>
@@ -642,41 +860,93 @@ export default function PlayfulDashboard() {
                           <div className="bg-purple-100 rounded-3xl p-6 relative overflow-hidden w-[80%]">
                             <div className="absolute right-4 top-4 z-10 flex space-x-2">
                               <button className="w-8 h-8 rounded-full bg-white bg-opacity-30 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  className="text-white"
+                                >
                                   <circle cx="12" cy="12" r="1" />
                                   <circle cx="19" cy="12" r="1" />
                                   <circle cx="5" cy="12" r="1" />
                                 </svg>
                               </button>
                               <button className="w-8 h-8 rounded-full bg-white bg-opacity-30 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  className="text-white"
+                                >
                                   <path d="M18 6 6 18" />
                                   <path d="m6 6 12 12" />
                                 </svg>
                               </button>
                             </div>
-                            <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-                            <p className="text-sm text-purple-800 mb-8">{item.description}</p>
+                            <h3 className="text-xl font-bold mb-1">
+                              {item.title}
+                            </h3>
+                            <p className="text-sm text-purple-800 mb-8">
+                              {item.description}
+                            </p>
 
                             <div className="relative w-full h-32 rounded-2xl bg-white bg-opacity-20 mb-4 flex items-center justify-center overflow-hidden">
                               <div className="absolute inset-0 flex items-center justify-center">
                                 <div className="w-16 h-16 rounded-full bg-white bg-opacity-30 flex items-center justify-center">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="28"
+                                    height="28"
+                                    viewBox="0 0 24 24"
+                                    fill="white"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
                                     <polygon points="5 3 19 12 5 21 5 3" />
                                   </svg>
                                 </div>
                               </div>
                               <div className="absolute bottom-4 left-4 flex items-center rounded-full bg-white bg-opacity-20 px-3 py-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1 text-white">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="18"
+                                  height="18"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  className="mr-1 text-white"
+                                >
                                   <circle cx="12" cy="12" r="10" />
                                   <polyline points="12 6 12 12 16 14" />
                                 </svg>
-                                <span className="text-white text-xs">Watching {item.watchTime}</span>
+                                <span className="text-white text-xs">
+                                  Watching {item.watchTime}
+                                </span>
                               </div>
                               <div className="absolute right-4 bottom-4">
                                 <div className="flex -space-x-2">
                                   {item.participants?.map((avatar, idx) => (
-                                    <div key={idx} className="w-8 h-8 rounded-full border-2 border-purple-100 overflow-hidden bg-gray-300">
+                                    <div
+                                      key={idx}
+                                      className="w-8 h-8 rounded-full border-2 border-purple-100 overflow-hidden bg-gray-300"
+                                    >
                                       <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-xs text-white font-bold">
                                         {idx + 1}
                                       </div>
@@ -692,20 +962,35 @@ export default function PlayfulDashboard() {
                               <span className="text-4xl">{item.icon}</span>
                             </div>
                             <div className="flex-1">
-                              <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-                              <p className="text-sm text-gray-600">{item.description}</p>
+                              <h3 className="text-xl font-bold mb-1">
+                                {item.title}
+                              </h3>
+                              <p className="text-sm text-gray-600">
+                                {item.description}
+                              </p>
 
                               <div className="mt-4 flex items-center">
-                                {item.status === 'completed' && (
+                                {item.status === "completed" && (
                                   <div className="px-4 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium flex items-center">
                                     <span className="mr-1">Completed</span>
                                     <span>👍</span>
                                   </div>
                                 )}
 
-                                {item.status === 'upcoming' && (
+                                {item.status === "upcoming" && (
                                   <div className="px-4 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-medium flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="16"
+                                      height="16"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      className="mr-1"
+                                    >
                                       <circle cx="12" cy="12" r="10" />
                                       <polyline points="12 6 12 12 16 14" />
                                     </svg>
@@ -714,24 +999,54 @@ export default function PlayfulDashboard() {
                                 )}
 
                                 <div className="ml-auto flex space-x-2">
-                                  {item.status !== 'completed' && (
+                                  {item.status !== "completed" && (
                                     <button className="w-8 h-8 rounded-full flex items-center justify-center">
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      >
                                         <path d="M18 6 6 18" />
                                         <path d="m6 6 12 12" />
                                       </svg>
                                     </button>
                                   )}
                                   <button className="w-8 h-8 rounded-full bg-gray-100 text-black flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
                                       <circle cx="12" cy="12" r="1" />
                                       <circle cx="19" cy="12" r="1" />
                                       <circle cx="5" cy="12" r="1" />
                                     </svg>
                                   </button>
-                                  {item.status === 'completed' && (
+                                  {item.status === "completed" && (
                                     <button className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center">
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      >
                                         <polyline points="20 6 9 17 4 12" />
                                       </svg>
                                     </button>
@@ -784,17 +1099,23 @@ export default function PlayfulDashboard() {
             <div className="p-6">
               {/* File Upload Area - Moved to the top */}
               <div className="mb-6">
-                <label className="block text-slate-700 font-medium mb-2">Upload File</label>
+                <label className="block text-slate-700 font-medium mb-2">
+                  Upload File
+                </label>
 
                 {!uploadedFile ? (
                   <div
                     className={`border-2 border-dashed rounded-2xl p-6 flex flex-col items-center justify-center cursor-pointer transition-colors ${
-                      isDragging ? 'border-teal-500 bg-teal-50' : 'border-slate-300 hover:border-teal-500 hover:bg-slate-50'
+                      isDragging
+                        ? "border-teal-500 bg-teal-50"
+                        : "border-slate-300 hover:border-teal-500 hover:bg-slate-50"
                     }`}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
-                    onClick={() => document.getElementById('file-input')?.click()}
+                    onClick={() =>
+                      document.getElementById("file-input")?.click()
+                    }
                   >
                     <input
                       type="file"
@@ -804,7 +1125,8 @@ export default function PlayfulDashboard() {
                     />
                     <File size={40} className="text-slate-400 mb-4" />
                     <p className="text-slate-600 text-center mb-2 font-medium">
-                      Drag and drop your file here, or <span className="text-teal-500">click to browse</span>
+                      Drag and drop your file here, or{" "}
+                      <span className="text-teal-500">click to browse</span>
                     </p>
                     <p className="text-slate-400 text-sm text-center">
                       Supported formats: PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX
@@ -816,7 +1138,9 @@ export default function PlayfulDashboard() {
                       <File size={20} className="text-teal-600" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-slate-800 truncate">{uploadedFile.name}</p>
+                      <p className="font-medium text-slate-800 truncate">
+                        {uploadedFile.name}
+                      </p>
                       <p className="text-slate-500 text-sm">
                         {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
                       </p>
@@ -828,7 +1152,10 @@ export default function PlayfulDashboard() {
                         removeFile();
                       }}
                     >
-                      <X size={16} className="text-slate-500 hover:text-red-500" />
+                      <X
+                        size={16}
+                        className="text-slate-500 hover:text-red-500"
+                      />
                     </button>
                   </div>
                 )}
@@ -848,31 +1175,42 @@ export default function PlayfulDashboard() {
                   type="text"
                   value={homeworkTitle}
                   onChange={(e) => setHomeworkTitle(e.target.value)}
-                  className={`w-full px-4 py-3 rounded-xl bg-slate-100 border ${titleError ? 'border-red-500' : 'border-transparent'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+                  className={`w-full px-4 py-3 rounded-xl bg-slate-100 border ${
+                    titleError ? "border-red-500" : "border-transparent"
+                  } focus:outline-none focus:ring-2 focus:ring-teal-500`}
                   placeholder="Enter homework title"
                 />
                 {titleError && (
                   <p className="text-red-500 text-sm mt-1 flex items-center">
-                    <AlertCircle size={14} className="inline mr-1" /> Title is required
+                    <AlertCircle size={14} className="inline mr-1" /> Title is
+                    required
                   </p>
                 )}
               </div>
 
               {/* Deadline Input */}
               <div className="mb-5">
-                <label className="block text-slate-700 font-medium mb-2">Submission Deadline</label>
+                <label className="block text-slate-700 font-medium mb-2">
+                  Submission Deadline
+                </label>
                 <div className="relative">
                   <input
                     type="date"
                     value={deadline}
                     onChange={(e) => setDeadline(e.target.value)}
-                    className={`w-full px-4 py-3 rounded-xl bg-slate-100 border ${deadlineError ? 'border-red-500' : 'border-transparent'} focus:outline-none focus:ring-2 focus:ring-teal-500`}
+                    className={`w-full px-4 py-3 rounded-xl bg-slate-100 border ${
+                      deadlineError ? "border-red-500" : "border-transparent"
+                    } focus:outline-none focus:ring-2 focus:ring-teal-500`}
                   />
-                  <CalendarIcon size={18} className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500" />
+                  <CalendarIcon
+                    size={18}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500"
+                  />
                 </div>
                 {deadlineError && (
                   <p className="text-red-500 text-sm mt-1 flex items-center">
-                    <AlertCircle size={14} className="inline mr-1" /> Deadline is required
+                    <AlertCircle size={14} className="inline mr-1" /> Deadline
+                    is required
                   </p>
                 )}
               </div>
@@ -901,7 +1239,10 @@ export default function PlayfulDashboard() {
       )}
 
       {/* Loading Overlay */}
-      <UploadLoadingOverlay isVisible={isUploading} onComplete={handleUploadComplete} />
+      <UploadLoadingOverlay
+        isVisible={isUploading}
+        onComplete={handleUploadComplete}
+      />
     </div>
   );
 }
