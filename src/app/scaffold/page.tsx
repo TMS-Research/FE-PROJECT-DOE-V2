@@ -293,14 +293,14 @@ export default function ScaffoldPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-slate-50 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-slate-50 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Animation styles */}
       <style jsx>{animationStyles}</style>
 
       {/* Decorative background elements */}
-      <div className="absolute left-20 top-20 w-40 h-40 bg-purple-200/20 rounded-full blur-xl"></div>
+      <div className="absolute left-20 top-20 w-40 h-40 bg-blue-200/20 rounded-full blur-xl"></div>
       <div className="absolute right-40 bottom-20 w-60 h-60 bg-blue-300/20 rounded-full blur-xl"></div>
-      <div className="absolute right-20 top-40 w-20 h-20 bg-fuchsia-200/30 rounded-full blur-md"></div>
+      <div className="absolute right-20 top-40 w-20 h-20 bg-blue-200/30 rounded-full blur-md"></div>
 
       {/* Transition Popup */}
       {showTransitionPopup && (
@@ -323,7 +323,7 @@ export default function ScaffoldPage() {
                       ? transitionFeedback
                         ? 'bg-green-100 text-green-700'
                         : 'bg-red-100 text-red-700'
-                      : 'bg-violet-50 hover:bg-violet-100 text-slate-700'
+                      : 'bg-blue-50 hover:bg-blue-100 text-slate-700'
                   }`}
                 >
                   <span className="font-semibold mr-2">{option.key}.</span>
@@ -342,42 +342,42 @@ export default function ScaffoldPage() {
         </div>
       )}
 
-      <div className="bg-white backdrop-blur-sm bg-opacity-90 rounded-[2rem] shadow-2xl shadow-purple-200/50 p-8 w-full max-w-[95%] md:max-w-[90%] lg:max-w-[85%] xl:max-w-[80%] relative overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div className="bg-white backdrop-blur-sm bg-opacity-90 rounded-[2rem] shadow-2xl shadow-blue-200/50 p-8 w-full max-w-[95%] md:max-w-[90%] lg:max-w-[85%] xl:max-w-[80%] relative overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
         {/* Decorative card elements */}
-        <div className="absolute -right-16 -top-16 w-32 h-32 bg-purple-100/50 rounded-full"></div>
+        <div className="absolute -right-16 -top-16 w-32 h-32 bg-blue-100/50 rounded-full"></div>
         <div className="absolute left-20 -bottom-10 w-20 h-20 bg-blue-100/50 rounded-full"></div>
 
         <div className="mb-8 relative z-10">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-violet-100 rounded-2xl flex items-center justify-center animate-float">
-              <Brain className="w-6 h-6 text-violet-600" />
+            <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center animate-float">
+              <Brain className="w-6 h-6 text-blue-600" />
             </div>
             <h1 className="text-2xl font-bold text-slate-800">Supercomputer Quiz</h1>
           </div>
 
-          <div className="w-full bg-violet-100 rounded-full h-3 mb-2 overflow-hidden">
+          <div className="w-full bg-blue-100 rounded-full h-3 mb-2 overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-violet-500 to-purple-500 rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-blue-500 to-blue-700 rounded-full transition-all duration-500"
               style={{ width: `${progressPercentage}%` }}
             ></div>
           </div>
 
           {/* Progress dots */}
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-violet-600 font-medium">Question {current + 1} of {questions.length}</span>
+            <span className="text-sm text-blue-600 font-medium">Question {current + 1} of {questions.length}</span>
             <div className="flex gap-1.5">
               {Array.from({ length: questions.length }).map((_, i) => (
                 <div
                   key={i}
                   className={`w-2.5 h-2.5 rounded-full ${
-                    i < current ? 'bg-violet-600' :
-                    i === current ? 'bg-violet-500 animate-pulse-slow' :
-                    'bg-violet-200'
+                    i < current ? 'bg-blue-600' :
+                    i === current ? 'bg-blue-500 animate-pulse-slow' :
+                    'bg-blue-200'
                   }`}
                 ></div>
               ))}
             </div>
-            <span className="text-sm text-violet-600 font-medium">{Math.round(progressPercentage)}% Complete</span>
+            <span className="text-sm text-blue-600 font-medium">{Math.round(progressPercentage)}% Complete</span>
           </div>
         </div>
 
@@ -419,7 +419,7 @@ export default function ScaffoldPage() {
                   <AccordionItem
                     key={subIndex}
                     value={qKey}
-                    className={`bg-violet-50/60 rounded-xl border border-violet-100 overflow-hidden ${!isEnabled ? 'opacity-60' : ''}`}
+                    className={`bg-blue-50/60 rounded-xl border border-blue-100 overflow-hidden ${!isEnabled ? 'opacity-60' : ''}`}
                     disabled={!isEnabled}
                   >
                     <AccordionTrigger className="px-5 py-3 hover:no-underline">
@@ -433,7 +433,7 @@ export default function ScaffoldPage() {
                             ? answerFeedback
                               ? 'border-green-300 focus:border-green-400 focus:ring-green-300/40'
                               : 'border-red-300 focus:border-red-400 focus:ring-red-300/40'
-                            : 'border-violet-200 focus:border-violet-400 focus:ring-violet-300/40'
+                            : 'border-blue-200 focus:border-blue-400 focus:ring-blue-300/40'
                         }`}
                         placeholder="Write your answer here..."
                         value={answers[qKey] || ''}
@@ -491,8 +491,8 @@ export default function ScaffoldPage() {
                             isSubmitted
                               ? answerFeedback
                                 ? 'bg-green-100 text-green-700 cursor-not-allowed'
-                                : 'bg-violet-100 text-violet-700 hover:bg-violet-200'
-                              : 'bg-violet-100 text-violet-700 hover:bg-violet-200'
+                                : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                              : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
                           }`}
                           disabled={isSubmitted && answerFeedback}
                         >
@@ -532,7 +532,7 @@ export default function ScaffoldPage() {
 
           <button
             onClick={handleNextQuestion}
-            className="px-6 py-3 rounded-xl font-medium bg-gradient-to-r from-violet-500 to-purple-500 text-white hover:shadow-lg hover:shadow-violet-200 hover:scale-[1.02] transition-all"
+            className="px-6 py-3 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:shadow-lg hover:shadow-blue-200 hover:scale-[1.02] transition-all"
           >
             {current < questions.length - 1 ? 'Next Question' : 'Submit'}
           </button>

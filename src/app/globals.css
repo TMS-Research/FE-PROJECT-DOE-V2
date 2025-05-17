@@ -16,8 +16,14 @@
     --card-foreground: 222.2 47.4% 11.2%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
-    --primary: 262.1 83.3% 57.8%;
+    --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
+    --primary-blue: 221.2 83.2% 53.3%;     /* blue-700 */
+    --primary-light-blue: 217.2 91.2% 59.8%; /* blue-500 */
+    --primary-yellow: 42.2 96.4% 59%; /* yellow-500 */
+    --primary-red: 0 91.8% 71.6%;     /* red-600 */
+    --primary-purple: 271.5 81.3% 55.9%; /* purple-600 */
+    --primary-green: 142.4 76.2% 36.3%; /* green-600 */
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
@@ -35,16 +41,21 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-  }
-  .dark {
+  }  .dark {
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
     --card: 224 71% 4%;
     --card-foreground: 213 31% 91%;
     --popover: 224 71% 4%;
     --popover-foreground: 215 20.2% 65.1%;
-    --primary: 262.1 83.3% 57.8%;
+    --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
+    --primary-blue: 213.8 94% 65.9%;     /* blue-600 in dark mode */
+    --primary-light-blue: 213.3 93.9% 67.8%; /* blue-400 in dark mode */
+    --primary-yellow: 47.4 95.8% 53.1%; /* yellow-400 in dark mode */
+    --primary-red: 0 91.1% 71%;     /* red-500 in dark mode */
+    --primary-purple: 269.2 79.3% 70.8%; /* purple-500 in dark mode */
+    --primary-green: 141.9 69.2% 58%; /* green-500 in dark mode */
     --secondary: 222.2 47.4% 11.2%;
     --secondary-foreground: 210 40% 98%;
     --muted: 223 47% 11%;
@@ -74,6 +85,15 @@
       radial-gradient(circle at top right, rgba(147, 51, 234, 0.05), transparent 800px),
       radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.05), transparent 800px);
     background-attachment: fixed;
+  }
+
+  textarea {
+    resize: unset;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-poppins);
+    font-weight: 600;
   }
 }
 
