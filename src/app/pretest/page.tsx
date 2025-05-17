@@ -201,14 +201,23 @@ export default function Pretest() {
   const progressPercentage = (answeredQuestions.length / normalQuestions.length) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 to-slate-50 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden" style={{
+      background: 'linear-gradient(135deg, #312e81 0%, #1e293b 100%)',
+      backgroundImage: `
+        linear-gradient(135deg, #312e81 0%, #1e293b 100%),
+        linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)
+      `,
+      backgroundSize: '100% 100%, 40px 40px, 40px 40px',
+      backgroundPosition: 'center, 0 0, 0 0'
+    }}>
       {/* Animation styles */}
       <style jsx>{animationStyles}</style>
 
       {/* Decorative background elements */}
-      <div className="absolute left-20 top-20 w-40 h-40 bg-purple-200/20 rounded-full blur-xl"></div>
+      <div className="absolute left-20 top-20 w-40 h-40 bg-blue-200/20 rounded-full blur-xl"></div>
       <div className="absolute right-40 bottom-20 w-60 h-60 bg-blue-300/20 rounded-full blur-xl"></div>
-      <div className="absolute right-20 top-40 w-20 h-20 bg-fuchsia-200/30 rounded-full blur-md"></div>
+      <div className="absolute right-20 top-40 w-20 h-20 bg-blue-200/30 rounded-full blur-md"></div>
 
       {showCelebration && (
         <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
@@ -218,28 +227,28 @@ export default function Pretest() {
         </div>
       )}
 
-      <div className="bg-white backdrop-blur-sm bg-opacity-90 rounded-[2rem] shadow-2xl shadow-purple-200/50 p-8 w-full max-w-[95%] md:max-w-[90%] lg:max-w-[85%] xl:max-w-[80%] relative overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      <div className="bg-white/0 backdrop-blur-sm rounded-[2rem] shadow-2xl shadow-blue-200/30 p-8 w-full max-w-[95%] md:max-w-[90%] lg:max-w-[85%] xl:max-w-[80%] relative overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
         {/* Decorative card elements */}
-        <div className="absolute -right-16 -top-16 w-32 h-32 bg-purple-100/50 rounded-full"></div>
+        <div className="absolute -right-16 -top-16 w-32 h-32 bg-blue-100/50 rounded-full"></div>
         <div className="absolute left-20 -bottom-10 w-20 h-20 bg-blue-100/50 rounded-full"></div>
 
         {!completed ? (
           <>
             <div className="mb-8 relative z-10">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-violet-100 rounded-2xl flex items-center justify-center animate-float">
-                  <Brain className="w-6 h-6 text-violet-600" />
+                <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center animate-float">
+                  <Brain className="w-6 h-6 text-blue-600" />
                 </div>
                 <h1 className="text-2xl font-bold text-slate-800">Knowledge Checkpoint</h1>
               </div>
 
-              <div className="w-full bg-violet-100 rounded-full h-3 mb-2 overflow-hidden">
+              <div className="w-full bg-blue-100 rounded-full h-3 mb-2 overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-violet-500 to-purple-500 rounded-full transition-all duration-500"
+                  className="h-full bg-gradient-to-r from-blue-500 to-blue-700 rounded-full transition-all duration-500"
                   style={{ width: `${progressPercentage}%` }}
                 ></div>
               </div>
-              <div className="flex justify-between text-sm text-violet-600 font-medium">
+              <div className="flex justify-between text-sm text-blue-600 font-medium">
                 <span>Question {Math.min(answeredQuestions.length + 1, normalQuestions.length)} of {normalQuestions.length}</span>
                 <span>{Math.round(progressPercentage)}% Complete</span>
               </div>
@@ -250,36 +259,32 @@ export default function Pretest() {
                 <h2 className="text-xl font-medium text-slate-800">{currentQuestion.text}</h2>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
                 {currentQuestion.options.map((option, index) => {
-                  // Different color themes for each option
+                  // Warna kontras tinggi untuk setiap grid
                   const colorClasses = [
-                    "bg-violet-50 border-violet-200 hover:bg-violet-100",
-                    "bg-blue-50 border-blue-200 hover:bg-blue-100",
-                    "bg-purple-50 border-purple-200 hover:bg-purple-100",
-                    "bg-fuchsia-50 border-fuchsia-200 hover:bg-fuchsia-100"
+                    "bg-blue-600 border-blue-800 text-white hover:bg-blue-700",
+                    "bg-cyan-500 border-cyan-700 text-white hover:bg-cyan-600",
+                    "bg-amber-400 border-amber-600 text-slate-900 hover:bg-amber-500",
+                    "bg-pink-500 border-pink-700 text-white hover:bg-pink-600"
                   ];
-
                   return (
                     <div
                       key={index}
                       onClick={() => !showFeedback && handleOptionSelect(index)}
-                      className={`p-4 rounded-xl border-2 transition-all ${colorClasses[index]} ${
+                      className={`flex flex-col items-center justify-center min-h-[120px] sm:min-h-[140px] lg:min-h-[180px] p-8 rounded-2xl border-4 font-bold text-lg sm:text-xl lg:text-2xl shadow-xl transition-all duration-200 cursor-pointer select-none text-center relative ${colorClasses[index]} ${
                         selectedOption === index
-                          ? 'border-violet-500 shadow-md shadow-violet-100'
-                          : 'hover:shadow-sm'
+                          ? 'ring-4 ring-offset-2 ring-white scale-105'
+                          : 'hover:scale-105'
                       } ${
-                        showFeedback ? 'cursor-not-allowed' : 'cursor-pointer hover:scale-[1.02] transition-transform'
+                        showFeedback ? 'cursor-not-allowed opacity-80' : ''
                       }`}
+                      style={{textShadow: '0 2px 8px rgba(0,0,0,0.18)'}}
                     >
-                      <div className="flex items-center">
-                        <div className={`w-8 h-8 flex items-center justify-center rounded-full mr-3 transition-colors ${
-                          selectedOption === index ? 'bg-violet-500 text-white' : 'bg-white text-slate-500 border border-slate-200'
-                        }`}>
-                          {String.fromCharCode(65 + index)}
-                        </div>
-                        <span className="text-slate-700 font-medium">{option}</span>
-                      </div>
+                      <span className="absolute top-4 left-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/30 text-white font-bold text-base border border-white/40">
+                        {index + 1}
+                      </span>
+                      <span className="w-full block break-words">{option}</span>
                     </div>
                   );
                 })}
@@ -320,7 +325,7 @@ export default function Pretest() {
                   className={`px-6 py-3 rounded-xl font-medium transition-all ${
                     selectedOption === null
                       ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-violet-500 to-purple-500 text-white hover:shadow-lg hover:shadow-violet-200 hover:scale-[1.02]'
+                      : 'bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:shadow-lg hover:shadow-blue-200 hover:scale-[1.02]'
                   }`}
                 >
                   Submit Answer
@@ -328,7 +333,7 @@ export default function Pretest() {
               ) : (
                 <button
                   onClick={handleNext}
-                  className="px-6 py-3 rounded-xl font-medium bg-gradient-to-r from-violet-500 to-purple-500 text-white hover:shadow-lg hover:shadow-violet-200 hover:scale-[1.02] transition-all"
+                  className="px-6 py-3 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:shadow-lg hover:shadow-blue-200 hover:scale-[1.02] transition-all"
                 >
                   Next Question
                 </button>
@@ -337,9 +342,9 @@ export default function Pretest() {
           </>
         ) : (
           <div className="text-center py-8 relative z-10">
-            <div className="w-24 h-24 mx-auto rounded-full bg-purple-100 flex items-center justify-center mb-6 animate-pulse-slow">
+            <div className="w-24 h-24 mx-auto rounded-full bg-blue-100 flex items-center justify-center mb-6 animate-pulse-slow">
               <div className="relative">
-                <Award className="w-12 h-12 text-purple-600" />
+                <Award className="w-12 h-12 text-blue-600" />
                 <div className="absolute -top-2 -right-2">
                   <Sparkles className="w-5 h-5 text-amber-500" />
                 </div>
@@ -349,13 +354,13 @@ export default function Pretest() {
             <h1 className="text-3xl font-bold text-slate-800 mb-2">
               Checkpoint Complete!
             </h1>
-            <p className="text-violet-600 font-medium text-lg mb-4">
+            <p className="text-blue-600 font-medium text-lg mb-4">
               Great job on completing all questions!
             </p>
 
-            <div className="bg-gradient-to-br from-violet-50 to-purple-50 p-6 rounded-xl mb-8 inline-block">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl mb-8 inline-block">
               <div className="text-5xl font-bold mb-2">
-                <span className="bg-gradient-to-r from-violet-600 to-purple-700 text-transparent bg-clip-text">
+                <span className="bg-gradient-to-r from-blue-600 to-blue-700 text-transparent bg-clip-text">
                   {score}/{normalQuestions.length}
                 </span>
               </div>
@@ -364,7 +369,7 @@ export default function Pretest() {
 
             <button
               onClick={handleFinish}
-              className="px-8 py-4 rounded-xl font-medium bg-gradient-to-r from-violet-500 to-purple-600 text-white hover:shadow-lg hover:shadow-violet-200 hover:scale-[1.02] transition-all w-full max-w-xs mx-auto flex items-center justify-center gap-2"
+              className="px-8 py-4 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:shadow-lg hover:shadow-blue-200 hover:scale-[1.02] transition-all w-full max-w-xs mx-auto flex items-center justify-center gap-2"
             >
               <span>Continue to Dashboard</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
